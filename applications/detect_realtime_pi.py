@@ -9,15 +9,19 @@ import threading
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 
-#import smbus
+import smbus
 # for RPI version 1, use "bus = smbus.SMBus(0)"
-#bus = smbus.SMBus(1)
+bus = smbus.SMBus(1)
 
 # This is the address we setup in the Arduino Program
-#address = 0x04
+address = 0x04
 
-#def writeNumber(value):
-#    bus.write_byte(address, value)
+def writeNumber(value):
+    try:
+        bus.write_byte(address, value)
+    except IOError:
+        print('IOError happend')
+        pass
 #    # bus.write_byte_data(address, 0, value)
 #    return -1
 
@@ -148,20 +152,20 @@ def pos_from_center(img_center, box_center):
 def command(avg_pos):
     if (avg_pos > 10):
         print("Turn Right: Rotate "+str(avg_pos)+" units")
-#        var = 6
-#        writeNumber(var)
-#        print "RPI: Hi Arduino, I sent you", var
+        var = 4
+        writeNumber(var)
+        print "RPI: Hi Arduino, I sent you", var
     elif (avg_pos < -10):
         print("Turn Left: Rorate "+str(avg_pos)+" units")
 #        # left q = 5
-#        var = 5
-#        writeNumber(var)
-#        print "RPI: Hi Arduino, I sent you", var
+        var = 3
+        writeNumber(var)
+        print "RPI: Hi Arduino, I sent you", var
     else:
         print("Go Straight")
-#        var = 1
-#        writeNumber(var)
-#        print "RPI: Hi Arduino, I sent you", var
+        var = 1
+        # writeNumber(var)
+        print "RPI: Hi Arduino, I sent you", var
 #    print('')
 
 def mean(l):
@@ -204,7 +208,7 @@ camera.framerate = 32
 rawCapture = PiRGBArray(camera, size=(win_w, win_h))
 
 # allow the camera to warmup
-time.sleep(0.1)
+time.sleep(.1)
 
 # initialize the nvagation system for different position
 global command_flag
@@ -245,7 +249,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
     vertices = np.array([[(0,imshape[0]),(0,int(imshape[0]/2)), 
         (int(imshape[1]),int(imshape[0]/2)), (imshape[1],imshape[0])]], dtype=np.int32)
 #    cv2.imshow("frame1", img)
-    img = region_of_interest(img, vertices)
+    #img = region_of_interest(img, vertices)
 
     rects, img = detect(img)
     img = box(rects, img)
@@ -291,20 +295,20 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
         # else:
         #     # print("Go Straight")
         
-        # print("The item which has max size: "+str(maxSizeItem))
+        print("The item which has max size: "+str(maxSizeItem))
 
         candidates.append(maxSizeItem['box_to_center'][0])
 
     if command_flag:
-        # print("command activated")
+        print("command activated")
         command(avg_pos)
         command_flag = False
-        time.sleep(1)
+        time.sleep(.1)
 
     recording[0] = img
 
     rawCapture.truncate(0)
-
+    print('runninng....')
  #   cv2.imshow("frame", img)
     if(cv2.waitKey(1) & 0xFF == ord('q')):
 	   break
