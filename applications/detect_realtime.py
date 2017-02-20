@@ -42,6 +42,10 @@ def navigate(candidates):
     else:
         pass
 
+def manual():
+    print("in manual mode")
+
+
 # initialize the nvagation system for different position
 global command_flag
 global avg_pos
@@ -76,6 +80,6 @@ while(True):
         command(avg_pos)
         command_flag = False
         time.sleep(.1)
- #   cv2.imshow("frame", img)
+    
     if(cv2.waitKey(1) & 0xFF == ord('q')):
-	   break
+        break
