@@ -78,11 +78,14 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
     flag = False
     img = frame.array
     imshape = img.shape
+    cv2.imshow("Raw", img)
     vertices = np.array([[(0,imshape[0]),(0,int(imshape[0]/2)), 
         (int(imshape[1]),int(imshape[0]/2)), (imshape[1],imshape[0])]], dtype=np.int32)
+    img = region_of_interest(img, vertices)
+    cv2.imshow("Preprocessed", img)
     rects, img = detect(img, scale_factor, min_neighs, obj_w, obj_h)
     img = box(rects, img)
-    cv2.imshow("Video", img)
+    cv2.imshow("Cascaded", img)
     measure(img, rects, candidates)
 
     if command_flag:
@@ -92,6 +95,5 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
         time.sleep(.1)
 
     rawCapture.truncate(0)
-    print('runninng....')
     if(cv2.waitKey(1) & 0xFF == ord('q')):
 	   break
