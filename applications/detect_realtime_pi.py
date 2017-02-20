@@ -1,6 +1,7 @@
 #opens up a webcam feed so you can then test your classifer in real time
 #using detectMultiScale
 from sys import argv
+import sys
 import cv2
 import numpy as np
 import time
@@ -253,6 +254,9 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 
     rects, img = detect(img)
     img = box(rects, img)
+
+    cv2.imshow("Video", img)
+#    sys.stdout.write( frame.tostring() )
 
     flag = False
 
