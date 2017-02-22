@@ -23,50 +23,30 @@ min_neighs = int(argv[4])
 win_w = 320 
 win_h = 240
 
-def command(avg_pos):
-    if (avg_pos > 10):
-        print("Turn Right: Rotate "+str(avg_pos)+" units")
-        var = 4
-        writeNumber(var)
-        print "RPI: Hi Arduino, I sent you", var
-    elif (avg_pos < -10):
-        print("Turn Left: Rorate "+str(avg_pos)+" units")
-        var = 3
-        writeNumber(var)
-        print "RPI: Hi Arduino, I sent you", var
-    else:
-        print("Go Straight")
-        var = 1
-        print "RPI: Hi Arduino, I sent you", var
 
 def mean(l):
     if len(l)==0:
         return 0.0
     return sum(l)/len(l)
 
-def navigate(candidates):
-    threading.Timer(0.5, navigate, args=[candidates]).start()
-    global command_flag
+def check_detection(candidates):
+    threading.Timer(0.5, check_detection, args=[candidates]).start()
+    global track_flag
     global avg_pos
     if candidates:
         avg_pos = mean(candidates)
-        command_flag = True
+        track_flag = True
         candidates[:] = []
     else:
         pass
 
-def look_around():
-    # direction : right / left
-    # unit : time duration
-    return
-
 # initialize the nvagation system for different position
-global command_flag
+global track_flag
 global avg_pos
-command_flag = False
+track_flag = False
 avg_pos = 0.
 candidates = []
-navigate(candidates)
+check_detection(candidates)
 
 # initialize the camera and grab a reference to the raw camera capture
 camera = PiCamera()
@@ -107,10 +87,10 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
         # if (time.time()-start) > 10:
         #     spiral_search()
 
-    if command_flag:
-        print("command activated")
-        command(avg_pos)
-        command_flag = False
+    if track_flag:
+        print("track activated")
+        track(avg_pos)
+        track_flag = False
         time.sleep(.1)
         # start = time.time() # since object found rest timer
 
