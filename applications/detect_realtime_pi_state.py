@@ -77,7 +77,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
     # cv2.imshow("Preprocessed", img)
     rects, img = detect(img, scale_factor, min_neighs, obj_w, obj_h)
     img = box(rects, img)
-    cv2.imshow("Cascaded", img)
+#    cv2.imshow("Cascaded", img)
     measure(img, rects, candidates)
 
     # if there's no rects found, look around

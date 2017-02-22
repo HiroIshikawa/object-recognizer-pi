@@ -33,7 +33,15 @@ def readNumber():
 #         print "RPI: Hi Arduino, I sent you", var
 
 def track(avg_pos):
-    if (avg_pos > 20):
+    if (avg_pos > 120):
+        print("Rotate Right: Rotate"+str(avg_pos)+" units")
+        var = 4
+        writeNumber(var)
+    elif (avg_pos < -120):
+        print("Rotate Left: Rotate"+str(avg_pos)+" units")
+        var = 3
+        writeNumber(var)
+    elif (avg_pos > 20):
         print("Turn Right: Rotate "+str(avg_pos)+" units")
         var = 7
         writeNumber(var)
