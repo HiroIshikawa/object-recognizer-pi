@@ -38,19 +38,28 @@ def track(avg_pos):
         var = 4
         writeNumber(var)
         print "RPI: Hi Arduino, I sent you", var
+        # time.sleep(.5)
+        # writeNumber(0)
     elif (avg_pos < -10):
         print("Turn Left: Rorate "+str(avg_pos)+" units")
         var = 3
         writeNumber(var)
         print "RPI: Hi Arduino, I sent you", var
+        # time.sleep(.5)
+        # writeNumber(0)
     else:
         print("Go Straight")
         var = 1
         print "RPI: Hi Arduino, I sent you", var
+        # time.sleep(5)
+        # writeNumber(0)
 
 # def look_around():
 #     # direction : right / left
 #     # unit : time duration
+#     # writeNumber(4) # turn right
+#     # time.sleep(.3)
+#     # writeNumber(0)
 #     return
 
 # def spiral_search():

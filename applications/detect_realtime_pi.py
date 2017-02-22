@@ -55,10 +55,10 @@ def navigate(candidates):
     else:
         pass
 
-def look_around():
-    # direction : right / left
-    # unit : time duration
-    return
+# def look_around():
+#     # direction : right / left
+#     # unit : time duration
+#     return
 
 # initialize the nvagation system for different position
 global command_flag
