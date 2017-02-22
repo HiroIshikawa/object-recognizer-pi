@@ -16,21 +16,16 @@ def readNumber():
     # number = bus.read_byte_data(address, 1)
     return number
 
-# def command(avg_pos):
-#     if (avg_pos > 10):
-#         print("Turn Right: Rotate "+str(avg_pos)+" units")
-#         var = 4
-#         writeNumber(var)
-#         print "RPI: Hi Arduino, I sent you", var
-#     elif (avg_pos < -10):
-#         print("Turn Left: Rorate "+str(avg_pos)+" units")
-#         var = 3
-#         writeNumber(var)
-#         print "RPI: Hi Arduino, I sent you", var
-#     else:
-#         print("Go Straight")
-#         var = 1
-#         print "RPI: Hi Arduino, I sent you", var
+# def look_around():
+#     # direction : right / left
+#     # unit : time duration
+#     # writeNumber(4) # turn right
+#     # time.sleep(.3)
+#     # writeNumber(0)
+#     return
+
+# def spiral_search():
+#     return
 
 def track(avg_pos):
     if (avg_pos > 120):
@@ -63,13 +58,4 @@ def track(avg_pos):
         # time.sleep(5)
         # writeNumber(0)
 
-# def look_around():
-#     # direction : right / left
-#     # unit : time duration
-#     # writeNumber(4) # turn right
-#     # time.sleep(.3)
-#     # writeNumber(0)
-#     return
 
-# def spiral_search():
-#     return

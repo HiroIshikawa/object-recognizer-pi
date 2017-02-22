@@ -88,6 +88,8 @@ def auto(stop_event):
     global win_w
     global win_h
 
+    global img
+
     global cap
     global command_flag
     global avg_pos
@@ -115,12 +117,9 @@ def auto(stop_event):
             time.sleep(.1)
         # if(cv2.waitKey(1) & 0xFF == ord('q')):
         #     break
-        window_name="Cascaded"
-        cv2.namedWindow(window_name)
-        cv2.imshow(window_name, img)
         # cv2.waitKey(1)
-        cv2.waitKey(1)
-        cv2.destroyAllWindows()
+        # cv2.waitKey(1)
+        # cv2.destroyAllWindows()
 
 def mode_controller():
     global switch
@@ -154,6 +153,9 @@ cap.set(4,win_h)
 time.sleep(.1)
 print('Camera activated')
 
+global img
+ret, img = cap.read()
+
 # now threading1 runs regardless of user input
 threading1 = threading.Thread(target=mode_controller)
 threading1.daemon = True
@@ -163,6 +165,11 @@ global switch
 switch = 'on'
 
 while(switch):
+    if img.any():
+        window_name="Cascaded"
+        cv2.namedWindow(window_name)
+        cv2.imshow(window_name, img)
+        cv2.waitKey(1)
     if switch=='off':
         break
 
