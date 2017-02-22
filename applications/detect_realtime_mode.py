@@ -68,17 +68,8 @@ def manual():
         var = raw_input("Enter Command: ")
         if var=='m':
             break
-    #    if not  var:
-    #        continue
-
-        # writeNumber(var)
+            
         print "RPI: Hi Arduino, I sent you", var
-        # sleep one second
-        # time.sleep(1)
-
-        # number = readNumber()
-        # print "Arduino: Hey RPI, I received a digit", number
-        # print
 
 def auto(stop_event):
     global obj_w
@@ -115,11 +106,6 @@ def auto(stop_event):
             command(avg_pos)
             command_flag = False
             time.sleep(.1)
-        # if(cv2.waitKey(1) & 0xFF == ord('q')):
-        #     break
-        # cv2.waitKey(1)
-        # cv2.waitKey(1)
-        # cv2.destroyAllWindows()
 
 def mode_controller():
     global switch
@@ -172,15 +158,3 @@ while(switch):
         cv2.waitKey(1)
     if switch=='off':
         break
-
-
-# while(True):
-#     input = raw_input("Manual (m) or Auto (a)?: ")
-#     if input == 'm':
-#         print('Activating manual mode..')
-#         manual()
-#     elif input == 'a':
-#         print('Activating auto mode..')
-#         auto()
-#     else:
-#         pass
