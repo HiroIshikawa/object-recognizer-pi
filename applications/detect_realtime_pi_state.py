@@ -20,7 +20,7 @@ obj_h = int(argv[2])
 scale_factor = float(argv[3])
 min_neighs = int(argv[4])
 # Change resolution to have better precision
-win_w = 320 
+win_w = 960
 win_h = 240
 
 
@@ -30,7 +30,7 @@ def mean(l):
     return sum(l)/len(l)
 
 def check_detection(candidates):
-    threading.Timer(0.5, check_detection, args=[candidates]).start()
+    threading.Timer(0.1, check_detection, args=[candidates]).start()
     global track_flag
     global avg_pos
     if candidates:
@@ -51,7 +51,7 @@ check_detection(candidates)
 # initialize the camera and grab a reference to the raw camera capture
 camera = PiCamera()
 camera.resolution = (win_w, win_h)
-camera.framerate = 32
+camera.framerate = 64
 rawCapture = PiRGBArray(camera, size=(win_w, win_h))
 
 # allow the camera to warmup
