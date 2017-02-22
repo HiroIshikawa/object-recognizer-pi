@@ -66,14 +66,8 @@ init_rawCapture = PiRGBArray(camera, size=(win_w, win_h))
 for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
     flag = False
     img = frame.array
-    """
-    Mask can be depreciated because of the picamera wide resolution.
-    """
-    # imshape = img.shape
     # cv2.imshow("Raw", img)
-    # vertices = np.array([[(0,imshape[0]),(0,int(imshape[0]/2)), 
-    #     (int(imshape[1]),int(imshape[0]/2)), (imshape[1],imshape[0])]], dtype=np.int32)
-    # img = region_of_interest(img, vertices)
+    # img = preprocess(img)
     # cv2.imshow("Preprocessed", img)
     rects, img = detect(img, scale_factor, min_neighs, obj_w, obj_h)
     img = box(rects, img)

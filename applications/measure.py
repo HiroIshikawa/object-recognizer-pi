@@ -1,8 +1,5 @@
 def centering_img(img):
-    """
-    Calculate the center of image in (x,y).
-    
-    """
+    """Calculate the center of image in (x,y)."""
     height, width, channels = img.shape
     center_x = width/2
     center_y = height/2
@@ -11,10 +8,7 @@ def centering_img(img):
     return (center_x, center_y)
 
 def sizing_box(rect):
-    """
-    Calculate the size of box.
-    
-    """
+    """Calculate the size of box."""
     box_width = abs(rect[0] - rect[2])
     box_height = abs(rect[1] - rect[3])
     # print('width of box: '+str(box_width))
@@ -22,10 +16,7 @@ def sizing_box(rect):
     return (box_width, box_height)
 
 def centering_box(rect):
-    """
-    Calculate the (x,y) of the center of a box in the iamge.
-
-    """
+    """Calculate the (x,y) of the center of a box in the iamge."""
     box_x = abs(rect[0] - rect[2])/2 + rect[0]
     box_y = abs(rect[1] - rect[3])/2 + rect[1]
     # print('x of object: '+str(box_x))
@@ -33,11 +24,7 @@ def centering_box(rect):
     return (box_x, box_y)
 
 def pos_from_center(img_center, box_center):
-    """
-    Calcualte the relative position of the object
-
-    
-    """
+    """Calcualte the relative position of the object"""
     box_rel_x = box_center[0]-img_center[0]
     box_rel_y = box_center[1]-img_center[1]
     # print('position of box to x: '+str(box_rel_x))
@@ -45,6 +32,14 @@ def pos_from_center(img_center, box_center):
     return (box_rel_x, box_rel_y)
 
 def measure(img, rects, candidates):
+    """
+    Measure the object location.
+
+    Put an object with maximam size detected in a
+    video frame (since cascade may detect more than
+    one) into candidate list, which is examined
+    regularly to initiate a command to arduino.
+    """
     # Get the coordinate of the center of the image
     img_center = centering_img(img)
 
@@ -67,23 +62,7 @@ def measure(img, rects, candidates):
         box_to_center = pos_from_center(img_center, box_center)
         boxes[i]['box_to_center'] = box_to_center
 
-    # for box in boxes:
-    #     print(box)
-    # for each box, find the best one to approach 
     if (boxes):
-        # elminate the boxes that above the horizon
-
-
         # find the box having the maximum size
         maxSizeItem = max(boxes, key=lambda x:x['box_size'][0]*x['box_size'][1])
-
-        # if (maxSizeItem['box_to_center'][0] > 0):
-        #     # print("Turn Right: Rotate "+str(maxSizeItem['box_to_center'][0])+" units")
-        # elif (maxSizeItem['box_to_center'][0] < 0):
-        #     # print("Turn Left: Rorate "+str(maxSizeItem['box_to_center'][0])+" units")
-        # else:
-        #     # print("Go Straight")
-        
-        # print("The item which has max size: "+str(maxSizeItem))
-
         candidates.append(maxSizeItem['box_to_center'][0])
