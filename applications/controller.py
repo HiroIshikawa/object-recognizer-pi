@@ -2,7 +2,7 @@ import threading
 import g
 from modes import *
 
-def mode_controller(cap, cas_params):
+def mode_controller():
     while (True):
         input = raw_input("Manual (m), Auto (a), or Quit (q)?: ")
         if input == 'm':

@@ -43,9 +43,8 @@ def box(rects, img):
     return img
     # cv2.imwrite('one.jpg', img);
 
-
-def detection_system(cap,cas_params):
-    print("In auto..")
+def wc_detection_system(cap,cas_params):
+    print("In Auto Detection System for Webcamera..")
     while(True):
         ret, raw_img = cap.read()
         imshape = raw_img.shape
@@ -55,3 +54,27 @@ def detection_system(cap,cas_params):
         rects, detected_img = detect(processed_img, cas_params)
         g.img = box(rects, detected_img)
         measure(raw_img, rects)
+
+def pi_detection_system(camera,rawCapture,cas_params):
+    print("In Auto Detction System for PiCamera...")
+    for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+        flag = False
+        raw_img = frame.array
+        # cv2.imshow("Raw", img)
+        # img = preprocess(img)
+        # cv2.imshow("Preprocessed", img)
+        rects, detected_img = detect(raw_img, cas_params)
+        g.img = box(rects, detected_img)
+    #    cv2.imshow("Cascaded", img)
+        measure(raw_img, rects)
+
+        # if there's no rects found, look around
+        # if not rects:
+        #     look_around() 
+            # Check time elapsed, if over 10 sec, invoke spiral search
+            # if (time.time()-start) > 10:
+            #     spiral_search()
+
+        rawCapture.truncate(0)
+        if(cv2.waitKey(1) & 0xFF == ord('q')):
+           break

@@ -1,9 +1,3 @@
-from detect import *
-from interface import *
-from measure import *
-from preprocess import *
-#opens up a webcam feed so you can then test your classifer in real time
-#using detectMultiScale
 from sys import argv
 import sys
 import cv2
@@ -14,81 +8,52 @@ import threading
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 
-def mean(l):
-    if len(l)==0:
-        return 0.0
-    return sum(l)/len(l)
+import g
+from controller import *
+from modes import *
+from preprocess import *
+from detect import *
+from measure import *
+from interface import *
 
-def check_detection(candidates):
-    threading.Timer(0.1, check_detection, args=[candidates]).start()
-    global track_flag
-    global avg_pos
-    if candidates:
-        avg_pos = mean(candidates)
-        track_flag = True
-        candidates[:] = []
-    else:
-        pass
-
+# Params for camera and object detection
 scale_factor = float(argv[1])
 min_neighs = int(argv[2])
 obj_w = int(argv[3])
 obj_h = int(argv[4])
-# Change resolution to have better precision
-win_w = 960
-win_h = 240
+win_w = int(argv[5])
+win_h = int(argv[6])
 
 # make params pack for cascade
 cas_params = (scale_factor, min_neighs, obj_w, obj_h)
-
-# initialize the nvagation system for different position
-global track_flag
-global avg_pos
-track_flag = False
-avg_pos = 0.
-candidates = []
-check_detection(candidates)
 
 # initialize the camera and grab a reference to the raw camera capture
 camera = PiCamera()
 camera.resolution = (win_w, win_h)
 camera.framerate = 64
 rawCapture = PiRGBArray(camera, size=(win_w, win_h))
+time.sleep(.1) # allow the camera to warmup
+# init_rawCapture = PiRGBArray(camera, size=(win_w, win_h))
 
-# allow the camera to warmup
-time.sleep(.1)
+# Image file used across threads
+g.img = None
 
-init_rawCapture = PiRGBArray(camera, size=(win_w, win_h))
+# Initiate a thread for PiCamera detection system
+detection_thread = threading.Thread(target=pi_detection_system, args=[camera, rawCapture, cas_params])
+detection_thread.daemon = True
+detection_thread.start()
 
-# the time of the initiation
-# start = time.time()
+# Initiate a therad for control system
+controller_thread = threading.Thread(target=mode_controller)
+controller_thread.daemon = True
+controller_thread.start()
 
-# while(True):
-for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
-    flag = False
-    img = frame.array
-    # cv2.imshow("Raw", img)
-    # img = preprocess(img)
-    # cv2.imshow("Preprocessed", img)
-    rects, img = detect(img, cas_params)
-    img = box(rects, img)
-#    cv2.imshow("Cascaded", img)
-    measure(img, rects, candidates)
-
-    # if there's no rects found, look around
-    # if not rects:
-    #     look_around() 
-        # Check time elapsed, if over 10 sec, invoke spiral search
-        # if (time.time()-start) > 10:
-        #     spiral_search()
-
-    if track_flag:
-        print("track activated")
-        track(avg_pos)
-        track_flag = False
-        time.sleep(.1)
-        # start = time.time() # since object found rest timer
-
-    rawCapture.truncate(0)
-    if(cv2.waitKey(1) & 0xFF == ord('q')):
-	   break
+# Main thread, exit when user send quit command in control system prompt
+while(g.power):
+    if g.img.any():
+        window_name="Cascaded"
+        cv2.namedWindow(window_name)
+        cv2.imshow(window_name, g.img)
+        cv2.waitKey(1)
+    if g.power=='off':
+        break
