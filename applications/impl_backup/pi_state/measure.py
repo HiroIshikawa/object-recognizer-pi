@@ -1,6 +1,3 @@
-import g
-import threading
-
 def centering_img(img):
     """Calculate the center of image in (x,y)."""
     height, width, channels = img.shape
@@ -68,23 +65,4 @@ def measure(img, rects):
     if (boxes):
         # find the box having the maximum size
         maxSizeItem = max(boxes, key=lambda x:x['box_size'][0]*x['box_size'][1])
-        g.candidates.append(maxSizeItem['box_to_center'][0])
-
-
-def mean(l):
-    if len(l)==0:
-        return 0.0
-    return sum(l)/len(l)
-
-def check_candidates(stop_event):
-    g.candidates
-    t = threading.Timer(0.5, check_candidates, args=[stop_event])
-    t.start()
-    if stop_event.is_set():
-        t.cancel()
-    if g.candidates:
-        g.avg_pos = mean(g.candidates)
-        g.track_flag = True
-        g.candidates[:] = []
-    else:
-        pass
+        candidates.append(maxSizeItem['box_to_center'][0])

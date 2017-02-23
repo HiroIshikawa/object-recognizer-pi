@@ -1,6 +1,4 @@
 import cv2
-from preprocess import *
-from measure import *
 
 # def detect(img, scale_factor, min_neighs, obj_w, obj_h):
 def detect(img, cas_params):
@@ -42,16 +40,3 @@ def box(rects, img):
         cv2.rectangle(img, (x1, y1), (x2, y2), (127, 255, 0), 2)
     return img
     # cv2.imwrite('one.jpg', img);
-
-
-def detection_system(cap,cas_params):
-    print("In auto..")
-    while(True):
-        ret, raw_img = cap.read()
-        imshape = raw_img.shape
-        vertices = np.array([[(0,imshape[0]),(0,int(imshape[0]/2)), 
-            (int(imshape[1]),int(imshape[0]/2)), (imshape[1],imshape[0])]], dtype=np.int32)
-        processed_img = region_of_interest(raw_img, vertices)
-        rects, detected_img = detect(processed_img, cas_params)
-        g.img = box(rects, detected_img)
-        measure(raw_img, rects)
