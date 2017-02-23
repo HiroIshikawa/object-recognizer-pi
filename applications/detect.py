@@ -1,6 +1,7 @@
 import cv2
 
-def detect(img, scale_factor, min_neighs, obj_w, obj_h):
+# def detect(img, scale_factor, min_neighs, obj_w, obj_h):
+def detect(img, cas_params):
     """
     Detects objects that matches with cascade classifiers.
 
@@ -20,7 +21,8 @@ def detect(img, scale_factor, min_neighs, obj_w, obj_h):
     #       total_rects.append(rect)
     #   total_rects.append(cur_rects[0])
     cascade = cv2.CascadeClassifier("cascade.xml")
-    rects = cascade.detectMultiScale(img, scale_factor, min_neighs, cv2.CASCADE_SCALE_IMAGE, (obj_w,obj_h))
+    # rects = cascade.detectMultiScale(img, scale_factor, min_neighs, cv2.CASCADE_SCALE_IMAGE, (obj_w,obj_h))
+    rects = cascade.detectMultiScale(img, cas_params[0], cas_params[1], cv2.CASCADE_SCALE_IMAGE, (cas_params[2],cas_params[3]))
 
     if len(rects) == 0:
         return [], img

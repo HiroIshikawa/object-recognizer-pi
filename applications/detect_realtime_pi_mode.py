@@ -14,16 +14,6 @@ import threading
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 
-
-obj_w = int(argv[1])
-obj_h = int(argv[2])
-scale_factor = float(argv[3])
-min_neighs = int(argv[4])
-# Change resolution to have better precision
-win_w = 960
-win_h = 240
-
-
 def mean(l):
     if len(l)==0:
         return 0.0
@@ -39,6 +29,17 @@ def check_detection(candidates):
         candidates[:] = []
     else:
         pass
+
+scale_factor = float(argv[1])
+min_neighs = int(argv[2])
+obj_w = int(argv[3])
+obj_h = int(argv[4])
+# Change resolution to have better precision
+win_w = 960
+win_h = 240
+
+# make params pack for cascade
+cas_params = (scale_factor, min_neighs, obj_w, obj_h)
 
 # initialize the nvagation system for different position
 global track_flag
@@ -69,7 +70,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
     # cv2.imshow("Raw", img)
     # img = preprocess(img)
     # cv2.imshow("Preprocessed", img)
-    rects, img = detect(img, scale_factor, min_neighs, obj_w, obj_h)
+    rects, img = detect(img, cas_params)
     img = box(rects, img)
 #    cv2.imshow("Cascaded", img)
     measure(img, rects, candidates)

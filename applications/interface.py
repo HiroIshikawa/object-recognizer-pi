@@ -1,13 +1,22 @@
-import smbus
+
+try:
+    import smbus
+    bus = smbus.SMBus(1)
+    address = 0x04
+except ImportError:
+    print('Not importing smbus')
+    pass
 # for RPI version 1, use "bus = smbus.SMBus(0)"
-bus = smbus.SMBus(1)
-address = 0x04
 
 def writeNumber(value):
     try:
         bus.write_byte(address, value)
     except IOError:
         print('IOError happend')
+        pass
+    except NameError:
+        # print('NameError happend')
+        # print('You may run this program not on Pi')
         pass
 #    # bus.write_byte_data(address, 0, value)
 
@@ -29,33 +38,22 @@ def readNumber():
 
 def track(avg_pos):
     if (avg_pos > 120):
-        print("Rotate Right: Rotate"+str(avg_pos)+" units")
-        var = 4
+        print("Detected at +"+str(avg_pos)+" units, Rotate Right.")
+        var = 4  # rotate right
         writeNumber(var)
     elif (avg_pos < -120):
-        print("Rotate Left: Rotate"+str(avg_pos)+" units")
-        var = 3
+        print("Detected at "+str(avg_pos)+" units, : Rotate Left.")
+        var = 3  # rotate left
         writeNumber(var)
     elif (avg_pos > 20):
-        print("Turn Right: Rotate "+str(avg_pos)+" units")
-        var = 7
+        print("Detected at +"+str(avg_pos)+" units, Tilt Right.")
+        var = 7  # tilt right
         writeNumber(var)
-        print "RPI: Hi Arduino, I sent you", var
-        # time.sleep(.5)
-        # writeNumber(0)
     elif (avg_pos < -20):
-        print("Turn Left: Rorate "+str(avg_pos)+" units")
-        var = 6
+        print("Detected at "+str(avg_pos)+" units, Tilt Left.")
+        var = 6  # tilt left
         writeNumber(var)
-        print "RPI: Hi Arduino, I sent you", var
-        # time.sleep(.5)
-        # writeNumber(0)
     else:
-        print("Stop to Go Straight")
-        var = 1
+        print("Detected at "+str(avg_pos)+" units, Go Straight: ")
+        var = 1  # go straight
         writeNumber(var)
-        print "RPI: Hi Arduino, I sent you", var
-        # time.sleep(5)
-        # writeNumber(0)
-
-
