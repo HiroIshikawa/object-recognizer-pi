@@ -1,7 +1,3 @@
-from detect import *
-from interface import *
-from measure import *
-from preprocess import *
 from sys import argv
 import sys
 import cv2
@@ -12,6 +8,10 @@ import threading
 import g
 from controller import *
 from modes import *
+from preprocess import *
+from detect import *
+from measure import *
+from interface import *
 
 # Params for camera and object detection
 scale_factor = float(argv[1])
