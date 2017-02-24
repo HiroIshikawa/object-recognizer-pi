@@ -13,8 +13,11 @@ def writeNumber(value):
 
 def readNumber():
     number = bus.read_byte(address)
-    # number = bus.read_byte_data(address, 1)
+    #number = bus.read_byte_data(address,0)
+    #number = bus.read_i2c_block_data(address,1)
+    #print(number)
     return number
+
 
 while True:
 

@@ -30,9 +30,12 @@ def mean(l):
     return sum(l)/len(l)
 
 def check_detection(candidates):
-    threading.Timer(0.1, check_detection, args=[candidates]).start()
+    threading.Timer(0.05, check_detection, args=[candidates]).start()
     global track_flag
     global avg_pos
+#    num = readNumber()
+#    if num:
+#        print("From Arduino: "+str(num))
     if candidates:
         avg_pos = mean(candidates)
         track_flag = True
@@ -85,7 +88,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
         print("track activated")
         track(avg_pos)
         track_flag = False
-        time.sleep(.1)
+#        time.sleep(.1)
         # start = time.time() # since object found rest timer
 
 

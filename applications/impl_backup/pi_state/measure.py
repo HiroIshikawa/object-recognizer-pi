@@ -31,7 +31,7 @@ def pos_from_center(img_center, box_center):
     # print('position of box to y: '+str(box_rel_y))
     return (box_rel_x, box_rel_y)
 
-def measure(img, rects):
+def measure(img, rects, candidates):
     """
     Measure the object location.
 

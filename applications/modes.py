@@ -14,7 +14,7 @@ def auto(stop_event):
 
 def manual():
     print("Entering manual mode, stop current movement")
-    # writeNumber(0)
+    writeNumber(0)
     while True:
 
         w = 1
@@ -26,10 +26,11 @@ def manual():
         e = 6
 
         var = raw_input("Enter command: ")
-        # writeNumber(var)
+        print('Your input: '+str(var))
+        # writeNumber(int(var))
         if var=='m':
             print("Entering manual mode, stop current movement")
-            # writeNumber(0)
+            writeNumber(0)
             break
-
+        writeNumber(int(var))
         print "RPI: Hi Arduino, I sent you", var

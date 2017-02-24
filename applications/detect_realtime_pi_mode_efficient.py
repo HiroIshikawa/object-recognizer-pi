@@ -9,8 +9,8 @@ from picamera.array import PiRGBArray
 from picamera import PiCamera
 
 import g
-from controller import *
-from modes import *
+from controller_efficient import *
+from modes_efficient import *
 from preprocess import *
 from detect import *
 from measure import *
@@ -41,12 +41,12 @@ g.img = rawCapture.array
 rawCapture.truncate(0)
  
 # Initiate a thread for PiCamera detection system
-detection_thread = threading.Thread(target=pi_detection_system, args=[camera, rawCapture, cas_params])
-detection_thread.daemon = True
-detection_thread.start()
+# detection_thread = threading.Thread(target=pi_detection_system, args=[camera, rawCapture, cas_params])
+# detection_thread.daemon = True
+# detection_thread.start()
 
 # Initiate a therad for control system
-controller_thread = threading.Thread(target=mode_controller)
+controller_thread = threading.Thread(target=mode_controller,args=[camera,rawCapture,cas_params])
 controller_thread.daemon = True
 controller_thread.start()
 

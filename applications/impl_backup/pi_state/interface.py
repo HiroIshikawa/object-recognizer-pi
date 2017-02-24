@@ -37,19 +37,19 @@ def readNumber():
 #     return
 
 def track(avg_pos):
-    if (avg_pos > 120):
+    if (avg_pos > 200):
         print("Detected at +"+str(avg_pos)+" units, Rotate Right.")
         var = 4  # rotate right
         writeNumber(var)
-    elif (avg_pos < -120):
+    elif (avg_pos < -200):
         print("Detected at "+str(avg_pos)+" units, : Rotate Left.")
         var = 3  # rotate left
         writeNumber(var)
-    elif (avg_pos > 20):
+    elif (avg_pos > 40):
         print("Detected at +"+str(avg_pos)+" units, Tilt Right.")
         var = 7  # tilt right
         writeNumber(var)
-    elif (avg_pos < -20):
+    elif (avg_pos < -40):
         print("Detected at "+str(avg_pos)+" units, Tilt Left.")
         var = 6  # tilt left
         writeNumber(var)
