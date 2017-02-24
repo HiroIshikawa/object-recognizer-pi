@@ -36,8 +36,10 @@ time.sleep(.1) # allow the camera to warmup
 # init_rawCapture = PiRGBArray(camera, size=(win_w, win_h))
 
 # Image file used across threads
-g.img = None
-
+camera.capture(rawCapture, 'bgr')
+g.img = rawCapture.array
+rawCapture.truncate(0)
+ 
 # Initiate a thread for PiCamera detection system
 detection_thread = threading.Thread(target=pi_detection_system, args=[camera, rawCapture, cas_params])
 detection_thread.daemon = True
