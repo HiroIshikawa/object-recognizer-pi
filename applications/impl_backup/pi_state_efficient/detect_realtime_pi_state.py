@@ -89,7 +89,8 @@ while(True):
         # Check time elapsed, if over 10 sec, invoke spiral search
         # if (time.time()-start) > 10:
         #     spiral_search()
-    if (time.time()-start_time >.5):
+    #if (time.time()-start_time >.1):
+    if True:
         if candidates:
             avg_pos = mean(candidates)
             track_flag = True
@@ -105,6 +106,6 @@ while(True):
 #        time.sleep(.1)
         # start = time.time() # since object found rest timer
 
-    rawCapture.truncate(0)
+    # rawCapture.truncate(0)
     if(cv2.waitKey(1) & 0xFF == ord('q')):
         break
