@@ -67,16 +67,17 @@ def track(avg_pos):
         writeNumber(var)
 
 def monitor(avg_pos):
-    if avg_pos > 150 or avg_pos < -150:
+    if avg_pos < 150 or avg_pos > -150:
         distance = readNumber()
-        print('Appx distance to the object: '+str(distance))
+        # print('Appx distance to the object: '+str(distance))
     else:
         distance = -1
-        pass
     if distance > 0 and distance < 50:
         accm_time = time.time()
         start_time = time.time()
         # pickup()  # picking up mode initiation
+        # writeNumber(0)
+        writeNumber(8)
         while True:
             if time.time()-start_time > 1.:  # 
                 complete = readNumber()

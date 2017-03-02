@@ -92,6 +92,7 @@ while(True):
     cv2.imshow("Cascaded", img)
     measure(img, rects, candidates)
 
+
     # def navigate(candidates):
     if (time.time() - start_time > .5):
         # threading.Timer(0.5, navigate, args=[candidates]).start()
@@ -119,13 +120,17 @@ while(True):
         # monitor_flag = False
         # monitor_start_time = time.time()
 
+
+    if cv2.waitKey(10) == 27:
+        # time.sleep(1)
+        print("Stopping..")
+        vs.stop()
+        cv2.destroyAllWindows()
+        break
+
+
     # cv2.waitKey(1)
     # if(cv2.waitKey(1) & 0xFF == ord('q')):
         # break
     # if cv2.waitKey(1) & 0xFF == ord('q'):
-    if cv2.waitKey(1) == 27:
-        time.sleep(1)
-        vs.stop()
-        cv2.destroyAllWindows()
-        break
         

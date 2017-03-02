@@ -38,6 +38,7 @@ vs = PiVideoStream((win_w,win_h),64).start()
 time.sleep(2.0)
 
 start_time = time.time()
+monitor_start_time = 0.
 
 while(True):
     img = vs.read()
@@ -69,7 +70,11 @@ while(True):
     if track_flag:
         print("track activated")
         track(avg_pos)
+        monitor_start_time = time.time()
         track_flag = False
+
+    if time.time()-monitor_start_time < 5.:
+        monitor(avg_pos)
 
     if(cv2.waitKey(1) & 0xFF == ord('q')):
         break
