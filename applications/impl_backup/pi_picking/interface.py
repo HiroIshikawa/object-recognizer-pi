@@ -72,7 +72,8 @@ def monitor(avg_pos):
         # print('Appx distance to the object: '+str(distance))
     else:
         distance = -1
-    if distance > 0 and distance < 50:
+    print('Distance reading: '+str(distance))
+    if distance > 0 and distance < 15 and not distance == 1:
         accm_time = time.time()
         start_time = time.time()
         # pickup()  # picking up mode initiation
@@ -81,8 +82,15 @@ def monitor(avg_pos):
         while True:
             if time.time()-start_time > 1.:  # 
                 complete = readNumber()
-                if complete:
+                print('Complete?: '+str(complete))
+                if complete==1:
+                    print('Received Complete Signal From Arduino')
+                    writeNumber(0)
+                    time.sleep(5)
                     break
                 start_time = time.time()
             if time.time()-accm_time > 10.:  # if 10 seconds passed after initiating picking up sequence
+                print('10 seconds passed. Backing detection state.')
+                writeNumber(0)
+                time.sleep(5)
                 break
