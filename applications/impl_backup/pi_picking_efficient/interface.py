@@ -73,8 +73,8 @@ def monitor(avg_pos):
     else:
         distance = -1
     print('Distance reading: '+str(distance))
-    if distance > 0 and distance < 15 and not distance == 1:
-        accm_time = time.time()
+    if distance > 0 and distance < 29 and not distance == 1 and not distance == 25:
+        # accm_time = time.time()
         start_time = time.time()
         # pickup()  # picking up mode initiation
         # writeNumber(0)
@@ -89,8 +89,8 @@ def monitor(avg_pos):
                     time.sleep(5)
                     break
                 start_time = time.time()
-            if time.time()-accm_time > 10.:  # if 10 seconds passed after initiating picking up sequence
-                print('10 seconds passed. Backing detection state.')
-                writeNumber(0)
-                time.sleep(5)
-                break
+            #if time.time()-accm_time > 10.:  # if 10 seconds passed after initiating picking up sequence
+            #    print('10 seconds passed. Backing detection state.')
+            #    writeNumber(0)
+            #    time.sleep(5)
+            #    break

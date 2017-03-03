@@ -74,7 +74,7 @@ try:
             monitor_start_time = time.time()
             track_flag = False
 
-        if time.time()-monitor_start_time < 5.:
+        if time.time()-monitor_start_time < 10.:
             monitor(avg_pos)
 
         if(cv2.waitKey(1) & 0xFF == ord('q')):
