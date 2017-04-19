@@ -72,7 +72,7 @@ def monitor(avg_pos):
         # print('Appx distance to the object: '+str(distance))
     else:
         distance = -1
-    print('Distance reading: '+str(distance))
+    # print('Distance reading: '+str(distance))
     if distance > 0 and distance < 29 and not distance == 1 and not distance == 25:
         # accm_time = time.time()
         start_time = time.time()
