@@ -5,7 +5,7 @@
 
 This module transforms a RaspberryPi+Picamera into a fully functional object recognition module.
 It leverages the cascade classifier on the OpenCV for its core recognition model and applications.
-Whole pieple line is implemented in Python.
+Whole pipeline is implemented in Python.
 
 
 ## Demo
