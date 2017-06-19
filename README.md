@@ -1,5 +1,14 @@
 # object-recognizer-pi
-Pi implementation of object recognizer module
+
+
+## An Object Recognition Module for Autonomous System Implementable on RaspberryPi
+
+This module transforms a RaspberryPi+Picamera into a fully functional object recognition module.
+It leverages the cascade classifier on the OpenCV for its core recognition model and applications.
+Whole pieple line is implemented in Python.
+
+
+## Demo
 
 Demo 1 - Object Recognition (Youtube Video):
 
